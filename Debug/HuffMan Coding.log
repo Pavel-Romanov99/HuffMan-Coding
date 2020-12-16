@@ -1,0 +1,10 @@
+﻿  main.cpp
+C:\Users\pavel\source\repos\HuffMan Coding\HuffMan Coding\MinHeap.h(47,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\pavel\source\repos\HuffMan Coding\HuffMan Coding\MinHeap.h(63,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\pavel\source\repos\HuffMan Coding\HuffMan Coding\MinHeap.h(70,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\pavel\source\repos\HuffMan Coding\HuffMan Coding\MinHeap.h(103,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\pavel\source\repos\HuffMan Coding\HuffMan Coding\MinHeap.h(138,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\pavel\source\repos\HuffMan Coding\HuffMan Coding\MinHeap.h(157,20): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\pavel\source\repos\HuffMan Coding\HuffMan Coding\MinHeap.h(159,21): warning C4018:  '<': signed/unsigned mismatch
+C:\Users\pavel\source\repos\HuffMan Coding\HuffMan Coding\menu.h(78,33): warning C4244:  '+=': conversion from 'double' to 'int', possible loss of data
+  HuffMan Coding.vcxproj -> C:\Users\pavel\source\repos\HuffMan Coding\Debug\HuffMan Coding.exe

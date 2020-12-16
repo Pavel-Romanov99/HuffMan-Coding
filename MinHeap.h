@@ -2,6 +2,7 @@
 #include <queue>
 #include <string>
 #include <vector>
+#include <fstream>
 using namespace std;
 
 struct node {
@@ -88,7 +89,6 @@ void printCodes(node* root, string str, vector<table*> &v)
 	}
 
 	if (root->data != '$') {
-		cout << root->data << ": " << str << "\n";
 		table *temp = new table(root->data, str);
 		v.push_back(temp);
 	}
