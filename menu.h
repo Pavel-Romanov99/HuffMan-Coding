@@ -1,6 +1,7 @@
 #include "MinHeap.h"
 
 node* root;
+int first = 0;
 
 void compress() {
 
@@ -10,33 +11,55 @@ void compress() {
 	cout << "Where do you want to write the results? - "; cin >> f2;
 
 	//read the first line of the input file and save it in input
-	ifstream input_file(f1);
+	ifstream input_file;
+	input_file.open(f1);
 	string input;
-	if (input_file.good())
+	if (input_file.is_open())
 	{
 		getline(input_file, input);
 	}
 	input_file.close();
 
-	string code;
 	//how many times a character is found in input file
 	vector<node*> symbol_frequency = timesFound(input);
 	//vector for the symbols and their codes
 	vector<table*> symbol_codes;
-
+	//create priority queue
 	priority_queue<node*, vector<node*>, compare> minHeap;
 
 	//create the tree and store its root
-	root = HuffmanTree(symbol_frequency, minHeap, code);
+	root = HuffmanTree(symbol_frequency, minHeap);
 	//print the codes and store them in symbol_codes
 	printCodes(root, "", symbol_codes);
 
 	//create the final code based on symbol codes and input
-	string final_code = createCode(input, code, symbol_codes);
+	string final_code = createCode(input, symbol_codes);
 
 	double ratio = 1;
-	ratio = (double)final_code.length() / (input.length() * 8);
-	cout << "Compressed / Decompressed ratio = " << ratio << endl;
+	//we divide the code length which is in bits on the input length which is
+	//in bits (because of the *8)
+	string str;
+	cout << "Do you want to see the compressed / decompressed ratio - y or n ? "; cin >> str;
+
+	while (true) {
+
+		if (str == "y") {
+			ratio = (double)final_code.length() / (input.length() * 8);
+			cout << "Compressed / Decompressed ratio = " << ratio << endl;
+			cout << endl;
+			break;
+		}
+		else if (str == "n") {
+			break;
+		}
+		else {
+			cout << "Invalid option! Try again" << endl;
+			cin >> str;
+		}
+	}
+
+
+
 
 	//write the code into the output file
 	ofstream output_file(f2);
@@ -96,10 +119,11 @@ void debugMode() {
 	}
 	input_file.close();
 	
+	//takes the final_code by 1 byte at a time and returns it in decimal
 	string byte = "";
 	int i = 0;
 	int counter = 1;
-	cout << "Debug Mode: ";
+	cout << "Debug Mode results: ";
 	while (code[i] != '\0') {
 		byte += code[i];
 		i++;
@@ -114,10 +138,6 @@ void debugMode() {
 }
 
 void menu() {
-	cout << "Welcome to my Huffman coding project" << endl;
-	cout << "To compress a file press - c " << endl;
-	cout << "To decompress a file press - d " << endl;
-	cout << "Type ""exit"" to close" << endl;
 
 	string command;
 	while (true) {
@@ -127,7 +147,7 @@ void menu() {
 			//read filename and compress it's contents
 			compress();
 			string choice;
-			cout << "Type debug for debug mode or decompress to decompress" << endl; cin >> choice;
+			cout << "Type debug for debug mode or decompress to decompress: "; cin >> choice;
 			while (true) {
 				if (choice == "debug") {
 					debugMode(); break;
@@ -140,17 +160,35 @@ void menu() {
 					cin >> choice;
 				}
 			}
+			first++;
 			break;
 		}
 		else if (command[0] == 'd' && command.length() == 1){
 			//read filename and decompress the code inside of it
 			string choice;
-			cout << "You cannot decompress before compressing first" << endl;
-			cout << "Do you wish to compress? - y or n" << endl; cin >> choice;
-			if (choice == "y") {
-				compress();
+			if (first == 0) {
+				cout << "You cannot decompress before compressing first" << endl;
+				cout << "Do you wish to compress? - y or n: "; cin >> choice;
+				if (choice == "y") {
+					compress();
+				}
+				else return;
 			}
 			decompress();
+			break;
+		}
+		else if (command == "debug") {
+			string choice;
+			if (first == 0) {
+				cout << "You cannot debug before compressing first" << endl;
+				cout << "Do you wish to compress? - y or n: "; cin >> choice;
+				if (choice == "y") {
+					compress();
+				}
+				else return;
+			}
+
+			debugMode();
 			break;
 		}
 		else if (command == "exit") {
@@ -158,6 +196,23 @@ void menu() {
 			return;
 		}
 		else cout << "Invalid command. Try again!" << endl;
+
+	}
+
+	string again;
+	cout << "Thanks for using my project!" << endl;
+	cout << "Do you want to try again? - y or n: "; cin >> again;
+	while (true) {
+		if (again == "y") {
+			menu();
+		}
+		else if (again == "n") {
+			break;
+		}
+		else {
+			cout << "Invalid option " << endl;
+			cin >> again;
+		}
 	}
 }
 

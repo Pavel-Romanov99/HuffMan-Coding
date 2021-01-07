@@ -1,1 +1,1 @@
-az sym nai dobroto makashi
+This is a HuffMan Coding test.
